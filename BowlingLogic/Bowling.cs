@@ -2,9 +2,9 @@
 
 public class Bowling
 {
-    public bool HasStarted false;
-    public bool HasEnded false;
-    public int currentFrame = 0;
+    public bool HasStarted {get; set;} = false;
+    public bool HasEnded {get; set;} = false;
+    public int currentFrame {get; set;} = 0;
 
     public void TakeRoll(int pins, int roll)
     {
