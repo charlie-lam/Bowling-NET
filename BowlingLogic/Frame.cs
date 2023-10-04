@@ -2,11 +2,11 @@ namespace BowlingLogic;
 
 public class Frame
 {
-    private int frameNumber;
+    private readonly int frameNumber;
 
-    public Frame(int frameNumber)
+    public Frame(int? frameNumber)
     {
-        this.frameNumber = frameNumber;
+        this.frameNumber = frameNumber ?? throw new ArgumentNullException(nameof(frameNumber));
     }
     private int rollOne;
     private int rollTwo;
@@ -28,11 +28,11 @@ public class Frame
     }
 
 
-    public int AddRoll(ref int roll, int pins)
+    static int AddRoll(ref int roll, int pins)
     {
         if (pins < 0 || pins > 10)
         {
-            throw new ArgumentException("Pin value out of range");
+            throw new ArgumentException($"Pin value {pins} out of range");
         }
         return pins;
     }
