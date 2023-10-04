@@ -2,7 +2,7 @@ namespace BowlingLogic;
 
 public class Frame : IFrame
 {
-    private readonly int frameNumber;
+    public readonly int frameNumber;
 
     public Frame(int? frameNumber)
     {
