@@ -1,6 +1,6 @@
 namespace BowlingLogic;
 
-public class Frame
+public class Frame : IFrame
 {
     private readonly int frameNumber;
 
