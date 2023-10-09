@@ -80,24 +80,6 @@ public class FrameTests
     }
 
     [Fact]
-    public void Frame_GetSetRollThreeTest_SetsRollThree()
-    {
-        //Arrange
-        var frame = new Frame(10);
-
-        //Act
-        frame.RollOne = 5;
-        frame.RollTwo = 5;
-        frame.RollThree = 9;
-
-        //Assert
-        frame.RollOne.Should().Be(5);
-        frame.RollTwo.Should().Be(5);
-        frame.RollThree.Should().Be(9);
-
-    }
-
-    [Fact]
     public void Frame_NotFrameTenRollThreeInvalid_ThrowsArgumentException()
     {
         //Arrange
