@@ -12,8 +12,8 @@ public class Frame : IFrame
     private int rollTwo;
     private int rollThree;
 
-    public int RollOne { get => rollOne; set => AddRoll(ref rollOne, value); }
-    public int RollTwo { get => rollTwo; set => AddRoll(ref rollTwo, value); }
+    public int RollOne { get => rollOne; set => rollOne = AddRoll(value); }
+    public int RollTwo { get => rollTwo; set => rollTwo = AddRoll(value); }
     public int RollThree
     {
         get => rollThree;
@@ -23,12 +23,12 @@ public class Frame : IFrame
             {
                 throw new ArgumentException("Third roll only available on the 10th frame and if previous two rolls are greater than 10.");
             }
-            AddRoll(ref rollThree, value);
+            rollThree = AddRoll(value);
         }
     }
 
 
-    static int AddRoll(ref int roll, int pins)
+    static int AddRoll(int pins)
     {
         if (pins < 0 || pins > 10)
         {
