@@ -1,6 +1,6 @@
 namespace BowlingLogic;
 
-public class FrameFactory
+public class FrameFactory : IFrameFactory
 {
     public IFrame CreateFrame(int frameNumber)
     {
