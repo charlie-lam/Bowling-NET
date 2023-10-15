@@ -8,16 +8,15 @@ public class FrameTests
     {
         //Arrange & Act
         var frame = new Frame(1);
-
         //Assert
-        frame.frameNumber.Should().Be(1);
+        frame.FrameNumber.Should().Be(1);
     }
 
     [Fact]
     public void Frame_InitialisedWithNull_ThrowsArgumentNullException()
     {
         //Act & Assert
-        Assert.Throws<ArgumentNullException>(()=> new Frame(null));
+        Assert.Throws<ArgumentNullException>(() => new Frame(null));
     }
 
     [Fact]
@@ -43,7 +42,7 @@ public class FrameTests
         var frame = new Frame(1);
 
         //Act & Assert
-        Assert.Throws<ArgumentException>(()=> frame.RollOne = pins);
+        Assert.Throws<ArgumentException>(() => frame.RollOne = pins);
     }
 
     [Fact]
@@ -92,7 +91,7 @@ public class FrameTests
         //Assert
         frame.RollOne.Should().Be(5);
         frame.RollTwo.Should().Be(5);
-        Assert.Throws<Exception>(()=> frame.RollThree = 9);
+        Assert.Throws<Exception>(() => frame.RollThree = 9);
     }
 
     [Fact]
@@ -108,6 +107,6 @@ public class FrameTests
         //Assert
         frame.RollOne.Should().Be(5);
         frame.RollTwo.Should().Be(4);
-        Assert.Throws<Exception>(()=> frame.RollThree = 9);
+        Assert.Throws<Exception>(() => frame.RollThree = 9);
     }
 }
