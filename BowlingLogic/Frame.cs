@@ -2,12 +2,15 @@ namespace BowlingLogic;
 
 public class Frame : IFrame
 {
-    public readonly int frameNumber;
+    public readonly int _frameNumber;
 
     public Frame(int? frameNumber)
     {
-        this.frameNumber = frameNumber ?? throw new ArgumentNullException(nameof(frameNumber));
+        _frameNumber = frameNumber ?? throw new ArgumentNullException(nameof(frameNumber));
     }
+
+    public int FrameNumber { get => _frameNumber; }
+
     private int rollOne;
     private int rollTwo;
     private int rollThree;
@@ -19,7 +22,7 @@ public class Frame : IFrame
         get => rollThree;
         set
         {
-            if (frameNumber != 10 || (RollOne + RollTwo < 10))
+            if (_frameNumber != 10 || (RollOne + RollTwo < 10))
             {
                 throw new Exception("Third roll only available on the 10th frame and if previous two rolls are greater than 10.");
             }
