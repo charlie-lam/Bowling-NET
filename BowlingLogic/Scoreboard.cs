@@ -1,6 +1,6 @@
 namespace BowlingLogic;
 
-public class Scoreboard
+public class Scoreboard : IScoreboard
 {
     private readonly List<Frame> _frames;
     private readonly List<int> _baseScore;
