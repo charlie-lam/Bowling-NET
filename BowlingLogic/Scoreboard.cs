@@ -2,15 +2,19 @@ namespace BowlingLogic;
 
 public class Scoreboard : IScoreboard
 {
-    private readonly List<Frame> _frames;
-    private readonly List<int> _baseScore;
-    private readonly List<int> _bonusScore;
+    private List<Frame> _frames;
+    private List<int> _baseScores;
+    private List<int> _bonusScores;
+
+    public IReadOnlyList<Frame> Frames => _frames;
+    public IReadOnlyList<int> BaseScores => _baseScores;
+    public IReadOnlyList<int> BonusScores => _bonusScores;
 
     public Scoreboard()
     {
         _frames = new List<Frame>();
-        _baseScore = new List<int>();
-        _bonusScore = new List<int>();
+        _baseScores = new List<int>();
+        _bonusScores = new List<int>();
     }
 
     public void AddFrame(Frame frame)
@@ -20,11 +24,17 @@ public class Scoreboard : IScoreboard
 
     public void AddBaseScore(int score)
     {
-        _baseScore.Add(score);
+        _baseScores.Add(score);
     }
     
     public void AddBonusScore(int score)
     {
-        _bonusScore.Add(score);
+        _bonusScores.Add(score);
+    }
+
+    public void UpdateBonusScore(int score, int frameNumber)
+    {
+        var index = frameNumber - 1;
+        if(index >= 0 && index < _bonusScores.Count) _bonusScores[index] += score;
     }
 }
