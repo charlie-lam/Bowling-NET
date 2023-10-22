@@ -1,7 +1,7 @@
 using AutoFixture.Xunit2;
 using AutoFixture.AutoNSubstitute;
 
-namespace TestHelpers.AutoSubstituteData;
+namespace TestHelpers;
 
 public class AutoSubstituteData : AutoDataAttribute
    {
