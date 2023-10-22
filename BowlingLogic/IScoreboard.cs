@@ -2,13 +2,11 @@
 {
     public interface IScoreboard
     {
-        IReadOnlyList<Frame> Frames { get; }
-        IReadOnlyList<int> BaseScores { get; }
+        IReadOnlyList<IFrame> Frames { get; }
         IReadOnlyList<int> BonusScores { get; }
 
-        void AddBaseScore(int score);
         void AddBonusScore(int score);
-        void AddFrame(Frame frame);
+        void AddFrame(IFrame frame);
         void UpdateBonusScore(int score, int frameNumber);
     }
 }

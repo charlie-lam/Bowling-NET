@@ -2,39 +2,50 @@ namespace BowlingLogic;
 
 public class Scoreboard : IScoreboard
 {
-    private List<Frame> _frames;
-    private List<int> _baseScores;
+    private List<IFrame> _frames;
     private List<int> _bonusScores;
 
-    public IReadOnlyList<Frame> Frames => _frames;
-    public IReadOnlyList<int> BaseScores => _baseScores;
+    public IReadOnlyList<IFrame> Frames => _frames;
     public IReadOnlyList<int> BonusScores => _bonusScores;
 
     public Scoreboard()
     {
-        _frames = new List<Frame>();
-        _baseScores = new List<int>();
+        _frames = new List<IFrame>();
         _bonusScores = new List<int>();
     }
 
-    public void AddFrame(Frame frame)
+    public void AddFrame(IFrame frame)
     {
-        _frames.Add(frame);
-    }
-
-    public void AddBaseScore(int score)
-    {
-        _baseScores.Add(score);
+        if(CanAddToList(_frames.Count))
+        {
+            _frames.Add(frame);
+        }
     }
     
     public void AddBonusScore(int score)
     {
-        _bonusScores.Add(score);
+        if(IsValidNumber(score) && CanAddToList(_bonusScores.Count))
+        {
+            _bonusScores.Add(score);
+        }
     }
 
     public void UpdateBonusScore(int score, int frameNumber)
     {
         var index = frameNumber - 1;
-        if(index >= 0 && index < _bonusScores.Count) _bonusScores[index] += score;
+        if (index >= 0 && index < _bonusScores.Count && IsValidNumber(score))
+        {
+            _bonusScores[index] += score;
+        }
+    }
+
+    private bool IsValidNumber(int score)
+    {
+        return score is < 10 and > 0;
+    }
+
+    private bool CanAddToList(int count)
+    {
+        return count < 10;
     }
 }
