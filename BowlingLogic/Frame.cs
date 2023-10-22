@@ -11,13 +11,13 @@ public class Frame : IFrame
 
     public int FrameNumber { get => _frameNumber; }
 
-    private int rollOne;
-    private int rollTwo;
-    private int rollThree;
+    private int? rollOne;
+    private int? rollTwo;
+    private int? rollThree;
 
-    public int RollOne { get => rollOne; set => rollOne = AddRoll(value); }
-    public int RollTwo { get => rollTwo; set => rollTwo = AddRoll(value); }
-    public int RollThree
+    public int? RollOne { get => rollOne; set => rollOne = AddRoll(value); }
+    public int? RollTwo { get => rollTwo; set => rollTwo = AddRoll(value); }
+    public int? RollThree
     {
         get => rollThree;
         set
@@ -31,7 +31,7 @@ public class Frame : IFrame
     }
 
 
-    static int AddRoll(int pins)
+    static int? AddRoll(int? pins)
     {
         if (pins < 0 || pins > 10)
         {
