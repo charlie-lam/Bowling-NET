@@ -22,19 +22,19 @@ public class Bowling
 
     public IScoreboard Scoreboard => _scoreboard;
 
-    private void ChangedHasStarted()
+    private void UpdateHasStarted()
     {
         _hasStarted = !_hasStarted;
     }
 
-    private void ChangedHasEnded()
+    private void UpdateHasEnded()
     {
         _hasEnded = !_hasEnded;
     }
 
     public void StartGame()
     {
-        ChangedHasStarted();
+        UpdateHasStarted();
         GenerateAndAddNewFrame(1);
     }
 
@@ -42,45 +42,39 @@ public class Bowling
     {
         if (!HasStarted || HasEnded) throw new Exception("Game not in a playable state");
         var latestFrame = Scoreboard.Frames.Last();
-        int rollNumber = 1;
-
-        if (latestFrame.RollOne.HasValue)
-        {
-            rollNumber = 2;
-        }
-
-        if (latestFrame.RollTwo.HasValue)
-        {
-            rollNumber = 3;
-        }
         var latestFrameNumber = latestFrame.FrameNumber;
 
-        switch (rollNumber)
+        if (!latestFrame.RollOne.HasValue)
         {
-            case 1:
-                latestFrame.RollOne ??= pins;
-                if (pins == 10)
-                {
-                    GenerateAndAddNewFrame(latestFrameNumber + 1);
-                }
-                break;
-            case 2:
-                latestFrame.RollTwo ??= pins;
-                if (latestFrame.FrameNumber != 10)
-                {
-                    GenerateAndAddNewFrame(latestFrameNumber + 1);
-                }
-                else if (latestFrame.RollOne + latestFrame.RollTwo != 10)
-                {
-                    ChangedHasEnded();
-                }
-                break;
-            case 3:
-                latestFrame.RollThree ??= pins;
-                ChangedHasEnded();
-                break;
-            default:
-                throw new ArgumentException("Roll number out of range");
+            latestFrame.RollOne ??= pins;
+            if (pins == 10)
+            {
+                GenerateAndAddNewFrame(latestFrameNumber + 1);
+            }
+        }
+
+        else if (!latestFrame.RollTwo.HasValue)
+        {
+            latestFrame.RollTwo ??= pins;
+            if (latestFrame.FrameNumber != 10)
+            {
+                GenerateAndAddNewFrame(latestFrameNumber + 1);
+            }
+            else if (latestFrame.RollOne + latestFrame.RollTwo != 10)
+            {
+                UpdateHasEnded();
+            }
+        }
+
+        else if (!latestFrame.RollThree.HasValue)
+        {
+            latestFrame.RollThree ??= pins;
+            UpdateHasEnded();
+        }
+
+        else
+        {
+            throw new ArgumentException("Roll number out of range");
         }
     }
 
