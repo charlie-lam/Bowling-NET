@@ -37,7 +37,6 @@ if (startGameResponse.ToLower() == "yes")
                     Console.WriteLine($"  Roll Two: {frame.RollTwo}");
                 }
 
-                // Display Roll Three (if applicable, e.g., for the 10th frame)
                 if (frame.FrameNumber == 10 && frame.RollThree.HasValue)
                 {
                     Console.WriteLine($"  Roll Three: {frame.RollThree}");
