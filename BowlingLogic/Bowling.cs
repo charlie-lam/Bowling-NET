@@ -4,7 +4,6 @@ public class Bowling
 {
     private bool _hasStarted;
     private bool _hasEnded;
-    private int _currentFrame;
 
     private IScoreboard _scoreboard;
     private IFrameFactory _frameFactory;
@@ -16,44 +15,78 @@ public class Bowling
 
         _hasStarted = false;
         _hasEnded = false;
-        _currentFrame = 0;
+    }
+
+    public bool HasStarted => _hasStarted;
+    public bool HasEnded => _hasEnded;
+
+    public IScoreboard Scoreboard => _scoreboard;
+
+    private void ChangedHasStarted()
+    {
+        _hasStarted = !_hasStarted;
+    }
+
+    private void ChangedHasEnded()
+    {
+        _hasEnded = !_hasEnded;
     }
 
     public void StartGame()
     {
-        _hasStarted = true;
-        var frame = GenerateNewFrame(1);
-        _scoreboard.AddFrame(frame);
+        ChangedHasStarted();
+        GenerateAndAddNewFrame(1);
     }
 
-    public void TakeRoll(int pins, int roll)
+    public void TakeRoll(int pins)
     {
-        var latestFrame = _scoreboard.Frames.Last();
+        if (!HasStarted || HasEnded) throw new Exception("Game not in a playable state");
+        var latestFrame = Scoreboard.Frames.Last();
+        int rollNumber = 1;
+
+        if (latestFrame.RollOne.HasValue)
+        {
+            rollNumber = 2;
+        }
+
+        if (latestFrame.RollTwo.HasValue)
+        {
+            rollNumber = 3;
+        }
         var latestFrameNumber = latestFrame.FrameNumber;
-        switch (roll)
+
+        switch (rollNumber)
         {
             case 1:
                 latestFrame.RollOne ??= pins;
+                if (pins == 10)
+                {
+                    GenerateAndAddNewFrame(latestFrameNumber + 1);
+                }
                 break;
             case 2:
                 latestFrame.RollTwo ??= pins;
-                if(latestFrame.FrameNumber != 10)
+                if (latestFrame.FrameNumber != 10)
                 {
-                    var nextFrame = _frameFactory.CreateFrame(latestFrameNumber + 1);
-                    _scoreboard.AddFrame(nextFrame);
+                    GenerateAndAddNewFrame(latestFrameNumber + 1);
+                }
+                else if (latestFrame.RollOne + latestFrame.RollTwo != 10)
+                {
+                    ChangedHasEnded();
                 }
                 break;
             case 3:
                 latestFrame.RollThree ??= pins;
+                ChangedHasEnded();
                 break;
             default:
                 throw new ArgumentException("Roll number out of range");
         }
     }
 
-    private IFrame GenerateNewFrame(int frameNumber)
+    private void GenerateAndAddNewFrame(int frameNumber)
     {
         var frame = _frameFactory.CreateFrame(frameNumber);
-        return frame;
+        Scoreboard.AddFrame(frame);
     }
 }
