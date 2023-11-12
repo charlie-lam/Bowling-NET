@@ -21,16 +21,33 @@ public class Scoreboard : IScoreboard
             _frames.Add(frame);
         }
     }
-    
-    public void AddBonusScore(int score)
+
+    public void CalculateBonus(IFrame frame)
     {
-        if(IsValidNumber(score) && CanAddToList(_bonusScores.Count))
+        var twoFramesBefore = Frames.ElementAtOrDefault(frame.FrameNumber - 3);
+        var oneFrameBefore = Frames.ElementAtOrDefault(frame.FrameNumber - 2);
+
+        if(twoFramesBefore != null && twoFramesBefore.RollOne == 10 && oneFrameBefore!.RollOne == 10)
         {
-            _bonusScores.Add(score);
+            UpdateBonusScore(frame.RollOne ?? 0, twoFramesBefore.FrameNumber);
+        }
+        if(oneFrameBefore != null && oneFrameBefore.RollOne == 10)
+        {
+            var bonus = (frame.RollOne ?? 0) + (frame.RollTwo ?? 0);
+            UpdateBonusScore(bonus, oneFrameBefore.FrameNumber);
+        }
+        if(oneFrameBefore != null && oneFrameBefore.RollOne + oneFrameBefore.RollTwo == 10 && oneFrameBefore.RollTwo != 0)
+        {
+            UpdateBonusScore(frame.RollOne ?? 0, oneFrameBefore.FrameNumber);
         }
     }
+    
+    public void AddBonusScore()
+    {
+        if(CanAddToList(_bonusScores.Count)) _bonusScores.Add(0);
+    }
 
-    public void UpdateBonusScore(int score, int frameNumber)
+    private void UpdateBonusScore(int score, int frameNumber)
     {
         var index = frameNumber - 1;
         if (index >= 0 && index < _bonusScores.Count && IsValidNumber(score))
@@ -41,7 +58,7 @@ public class Scoreboard : IScoreboard
 
     private bool IsValidNumber(int score)
     {
-        return score is < 10 and > 0;
+        return score is <= 10 and >= 0;
     }
 
     private bool CanAddToList(int count)

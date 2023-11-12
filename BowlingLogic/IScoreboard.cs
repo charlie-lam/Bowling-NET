@@ -5,8 +5,8 @@
         IReadOnlyList<IFrame> Frames { get; }
         IReadOnlyList<int> BonusScores { get; }
 
-        void AddBonusScore(int score);
+        void AddBonusScore();
         void AddFrame(IFrame frame);
-        void UpdateBonusScore(int score, int frameNumber);
+        void CalculateBonus(IFrame frame);
     }
 }
