@@ -42,6 +42,8 @@ if (startGameResponse.ToLower() == "yes")
                     Console.WriteLine($"  Roll Three: {frame.RollThree}");
                 }
 
+                Console.WriteLine($"  Bonus score: {bowlingGame.Scoreboard.BonusScores.ElementAt(frame.FrameNumber - 1)}");
+
                 Console.WriteLine();
             }
         }
