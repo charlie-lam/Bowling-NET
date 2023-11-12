@@ -49,6 +49,7 @@ public class Bowling
             latestFrame.RollOne ??= pins;
             if (pins == 10)
             {
+                Scoreboard.CalculateBonus(latestFrame);
                 GenerateAndAddNewFrame(latestFrameNumber + 1);
             }
         }
@@ -58,6 +59,7 @@ public class Bowling
             latestFrame.RollTwo ??= pins;
             if (latestFrame.FrameNumber != 10)
             {
+                Scoreboard.CalculateBonus(latestFrame);
                 GenerateAndAddNewFrame(latestFrameNumber + 1);
             }
             else if (latestFrame.RollOne + latestFrame.RollTwo != 10)
@@ -69,6 +71,7 @@ public class Bowling
         else if (!latestFrame.RollThree.HasValue)
         {
             latestFrame.RollThree ??= pins;
+            Scoreboard.CalculateBonus(latestFrame);
             UpdateHasEnded();
         }
 
@@ -81,6 +84,7 @@ public class Bowling
     private void GenerateAndAddNewFrame(int frameNumber)
     {
         var frame = _frameFactory.CreateFrame(frameNumber);
+        Scoreboard.AddBonusScore();
         Scoreboard.AddFrame(frame);
     }
 }
